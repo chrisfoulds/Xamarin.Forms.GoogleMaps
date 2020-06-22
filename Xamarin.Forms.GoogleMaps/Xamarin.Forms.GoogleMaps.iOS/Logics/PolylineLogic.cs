@@ -41,7 +41,7 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
             var nativePolyline = NativePolyline.FromPath(path);
             nativePolyline.StrokeWidth = outerItem.StrokeWidth;
-            nativePolyline.StrokeColor = outerItem.StrokeColor.ToUIColor();
+            nativePolyline.StrokeColor =outerItem.StrokeColor.ToUIColor();
             nativePolyline.Tappable = outerItem.IsClickable;
             nativePolyline.ZIndex = outerItem.ZIndex;
 
@@ -59,9 +59,19 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override NativePolyline DeleteNativeItem(Polyline outerItem)
         {
-            var nativePolyline = outerItem.NativeObject as NativePolyline;
-            nativePolyline.Map = null;
-            return nativePolyline;
+            if(outerItem!=null)
+            {
+                if(outerItem.NativeObject is NativePolyline)
+                {
+                    if(outerItem.NativeObject !=null)
+                    {
+                        var nativePolyline = outerItem.NativeObject as NativePolyline;
+                        nativePolyline.Map = null;
+                        return nativePolyline;
+                    }
+                }
+            }
+            return null;
         }
 
         void OnOverlayTapped(object sender, GMSOverlayEventEventArgs e)
