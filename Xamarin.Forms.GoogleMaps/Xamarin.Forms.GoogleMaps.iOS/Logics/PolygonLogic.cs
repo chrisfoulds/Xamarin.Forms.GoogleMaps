@@ -68,11 +68,25 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override NativePolygon DeleteNativeItem(Polygon outerItem)
         {
-            outerItem.SetOnHolesChanged(null);
+            if (outerItem != null)
+            {
+                outerItem.SetOnHolesChanged(null);
+            }
+            if (outerItem != null)
+            {
+                if (outerItem.NativeObject is NativePolygon)
+                {
+                    if (outerItem.NativeObject != null)
+                    {
+                        var nativePolygon = outerItem.NativeObject as NativePolygon;
+                        nativePolygon.Map = null;
+                        return nativePolygon;
+                    }
+                }
+            }
+            return null;
 
-            var nativePolygon = outerItem.NativeObject as NativePolygon;
-            nativePolygon.Map = null;
-            return nativePolygon;
+
         }
 
         void OnOverlayTapped(object sender, GMSOverlayEventEventArgs e)

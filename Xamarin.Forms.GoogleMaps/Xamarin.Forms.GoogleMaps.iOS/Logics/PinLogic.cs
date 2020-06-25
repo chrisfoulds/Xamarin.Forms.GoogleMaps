@@ -103,18 +103,34 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override Marker DeleteNativeItem(Pin outerItem)
         {
-            var nativeMarker = outerItem.NativeObject as Marker;
 
-            _onMarkerDeleting(outerItem, nativeMarker);
+            if(outerItem==null ||outerItem.NativeObject==null)
+            {
+                return null;
+            }
 
-            nativeMarker.Map = null;
+            if(outerItem.NativeObject is Marker)
+            {
+                var nativeMarker = outerItem.NativeObject as Marker;
 
-            if (ReferenceEquals(Map.SelectedPin, outerItem))
-                Map.SelectedPin = null;
+                if (nativeMarker != null)
+                {
+                    _onMarkerDeleting(outerItem, nativeMarker);
 
-            _onMarkerDeleted(outerItem, nativeMarker);
+                    nativeMarker.Map = null;
 
-            return nativeMarker;
+                    if (ReferenceEquals(Map.SelectedPin, outerItem))
+                        Map.SelectedPin = null;
+
+                    _onMarkerDeleted(outerItem, nativeMarker);
+
+                    return nativeMarker;
+                }
+                return null;
+            }
+            return null;
+
+            
         }
 
         internal override void OnMapPropertyChanged(PropertyChangedEventArgs e)

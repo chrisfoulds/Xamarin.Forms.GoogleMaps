@@ -47,9 +47,20 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override NativeTileLayer DeleteNativeItem(TileLayer outerItem)
         {
-            var nativeTileLayer = outerItem.NativeObject as NativeTileLayer;
-            nativeTileLayer.Map = null;
-            return nativeTileLayer;
+
+            if (outerItem != null)
+            {
+                if (outerItem.NativeObject is NativeTileLayer)
+                {
+                    if (outerItem.NativeObject != null)
+                    {
+                        var nativeTileLayer = outerItem.NativeObject as NativeTileLayer;
+                        nativeTileLayer.Map = null;
+                        return nativeTileLayer;
+                    }
+                }
+            }
+            return null;
         }
 
         protected override void OnItemPropertyChanged(object sender, PropertyChangedEventArgs e)

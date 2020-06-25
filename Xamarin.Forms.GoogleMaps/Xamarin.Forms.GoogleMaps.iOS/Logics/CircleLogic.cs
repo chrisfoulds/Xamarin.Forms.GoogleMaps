@@ -50,9 +50,19 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override NativeCircle DeleteNativeItem(Circle outerItem)
         {
-            var nativeCircle = outerItem.NativeObject as NativeCircle;
-            nativeCircle.Map = null;
-            return nativeCircle;
+            if (outerItem != null)
+            {
+                if (outerItem.NativeObject is NativeCircle)
+                {
+                    if (outerItem.NativeObject != null)
+                    {
+                        var nativeCircle = outerItem.NativeObject as NativeCircle;
+                        nativeCircle.Map = null;
+                        return nativeCircle;
+                    }
+                }
+            }
+            return null;
         }
 
         void OnOverlayTapped(object sender, GMSOverlayEventEventArgs e)

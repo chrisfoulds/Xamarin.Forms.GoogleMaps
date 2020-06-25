@@ -67,10 +67,24 @@ namespace Xamarin.Forms.GoogleMaps.Logics.iOS
 
         protected override NativeGroundOverlay DeleteNativeItem(GroundOverlay outerItem)
         {
-            var nativeOverlay = outerItem.NativeObject as NativeGroundOverlay;
-            nativeOverlay.Map = null;
 
-            return nativeOverlay;
+            if (outerItem != null)
+            {
+                if (outerItem.NativeObject is NativeGroundOverlay)
+                {
+                    if (outerItem.NativeObject != null)
+                    {
+                        var nativeOverlay = outerItem.NativeObject as NativeGroundOverlay;
+                        nativeOverlay.Map = null;
+
+                        return nativeOverlay;
+                    }
+                }
+            }
+            return null;
+
+
+
         }
 
         void OnOverlayTapped(object sender, GMSOverlayEventEventArgs e)
